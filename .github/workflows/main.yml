@@ -1,0 +1,25 @@
+name: Download All Quran Audio
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install requests
+        run: pip install requests
+      - name: Download Audios
+        run: python download_quran_audio.py
+      - name: Push to repo
+        run: |
+          git config --global user.name "Quran Bot"
+          git config --global user.email "bot@example.com"
+          git add Quran_Audio/
+          git commit -m "Add all Quran audios" || echo "no changes"
+          git push
